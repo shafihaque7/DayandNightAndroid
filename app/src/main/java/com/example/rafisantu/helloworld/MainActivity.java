@@ -129,4 +129,5 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(MainActivity.this, hour_x + " : " + minute_x, Toast.LENGTH_LONG).show();
         }
     };
+    int testingChanges=5;
 }

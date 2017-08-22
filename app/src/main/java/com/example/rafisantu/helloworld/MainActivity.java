@@ -130,4 +130,5 @@ public class MainActivity extends AppCompatActivity {
         }
     };
     int testingChanges=5;
+    int anotherChanges;
 }

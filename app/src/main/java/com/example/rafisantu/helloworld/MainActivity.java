@@ -54,13 +54,6 @@ import static java.lang.Math.tan;
 
 public class MainActivity extends AppCompatActivity {
 
-    double Latitude;
-    double Longitude;
-
-    Button locationButton; // vid has it on private
-    TextView locationText;
-    private LocationListener locationListener;
-    private LocationManager locationManager;
 
 
     TextView txt;
@@ -121,54 +114,6 @@ public class MainActivity extends AppCompatActivity {
 
         setContentView(R.layout.activity_main);
 
-        locationButton = (Button) findViewById(R.id.buttonLocation);
-        locationText = (TextView) findViewById(R.id.textViewLocation);
-        locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
-        locationListener = new LocationListener() {
-            @Override
-            public void onLocationChanged(Location location) {
-                locationText.append("\n "+ location.getLatitude() +" "+location.getLongitude());
-                Latitude=location.getLatitude();
-                Longitude = location.getLongitude();
-                converter();
-
-
-            }
-
-            @Override
-            public void onStatusChanged(String provider, int status, Bundle extras) {
-
-            }
-
-            @Override
-            public void onProviderEnabled(String provider) {
-
-            }
-
-            @Override
-            public void onProviderDisabled(String provider) {
-                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                startActivity(intent);
-
-            }
-        };
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
-            requestPermissions(new String[]{
-                    Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION,
-                    Manifest.permission.INTERNET
-            },10);
-            return;
-        }else{
-            configureButton();
-        }
-        //locationManager.requestLocationUpdates("gps", 5000, 0, locationListener);
 
 
 
@@ -247,8 +192,6 @@ public class MainActivity extends AppCompatActivity {
 
 
                 canvas = new Canvas(mutableBitmap);
-                canvas.drawPoint(200, 100, paint);
-
                 for (int i = 0; i < widthOfImage; i++) { // First loop for all of the width value.
                     for (int j = filter1.wtab_[i]; j < heightOfImage; j++) { // Second loop starts at the y value for the curve. Ends at the height of the image, which is bottom of the image.
                         canvas.drawPoint(i,j,paint);
@@ -259,7 +202,7 @@ public class MainActivity extends AppCompatActivity {
                 Paint paint2=new Paint();
                 paint2.setAntiAlias(true);
                 paint2.setColor(colour2);
-                canvas.drawCircle((int)xAxis,(int)yAxis,25,paint2);
+                //canvas.drawCircle((int)xAxis,(int)yAxis,25,paint2);
 
 
 
@@ -280,39 +223,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        switch(requestCode){
-            case 10:
-                if (grantResults.length>0 && grantResults[0] == PackageManager.PERMISSION_GRANTED)
-                    configureButton();
-                return;
 
-        }
-    }
-
-    private void configureButton(){
-        locationButton.setOnClickListener(new View.OnClickListener() {
-
-            @Override
-            public void onClick(View view){
-                locationManager.requestLocationUpdates("gps", 5000, 0, locationListener);
-
-
-            }
-        });
-
-
-    }
-    public void converter(){
-        xAxis = (Longitude+180)*(widthOfImage/360);
-
-
-        double latRad = Latitude*PI/180;
-        double mercN = Math.log(tan((PI/4)+(latRad/2)));
-        yAxis = (heightOfImage/2)-(widthOfImage*mercN/(2*PI));
-
-    }
 
 
 

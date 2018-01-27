@@ -193,7 +193,7 @@ public class MainActivity extends AppCompatActivity {
 
                 canvas = new Canvas(mutableBitmap);
                 for (int i = 0; i < widthOfImage; i++) { // First loop for all of the width value.
-                    for (int j = filter1.wtab_[i]; j < heightOfImage; j++) { // Second loop starts at the y value for the curve. Ends at the height of the image, which is bottom of the image.
+                    for (int j = 0; j <=filter1.wtab_[i]; j++) { // Second loop starts at the y value for the curve. Ends at the height of the image, which is bottom of the image.
                         canvas.drawPoint(i,j,paint);
                     }
                 }
